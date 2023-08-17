@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 import { Todo } from "../model";
-import './styles.css';
-import TodoCard from './TodoCard';
+import "./styles.css";
+import TodoCard from "./TodoCard";
 
 interface Props {
   todos: Todo[];
@@ -10,12 +10,17 @@ interface Props {
 
 const TodoList: React.FC<Props> = ({ setTodos, todos }) => {
   return (
-    <div className='todos'>
-      {todos.map(todo => (
-        <TodoCard>{todo}</TodoCard>
+    <div className="todos">
+      {todos.map((todo) => (
+        <TodoCard
+          key={todo.id}
+          setTodos={setTodos}
+          todo={todo}
+          todos={todos}
+        />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default TodoList
+export default TodoList;
