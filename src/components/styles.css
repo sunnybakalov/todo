@@ -52,7 +52,12 @@
 }
 
 .todos__remove {
-  background-color: red;
+  display: flex;
+  width: 47.5%;
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: rgb(235, 103, 80);
 }
 
 .todos__heading {
