@@ -2,47 +2,68 @@ import React from "react";
 import { Todo } from "../model";
 import "./styles.css";
 import TodoCard from "./TodoCard";
+import { Droppable } from "react-beautiful-dnd";
+import { StrictModeDroppable } from './droppable';
 
 interface Props {
+  completedTodos: Todo[];
+  setCompletedTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
   todos: Todo[];
   setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
 
-const TodoList: React.FC<Props> = ({ setTodos, todos }) => {
+const TodoList: React.FC<Props> = ({
+  completedTodos,
+  setCompletedTodos,
+  setTodos,
+  todos,
+}) => {
+  {console.log(todos, 'TODO')}
   return (
-    // <div className="todos">
-    //   {todos.map((todo) => (
-    //     <TodoCard
-    //       key={todo.id}
-    //       setTodos={setTodos}
-    //       todo={todo}
-    //       todos={todos}
-    //     />
-    //   ))}
-    // </div>
     <div className="container">
-      <div className="todos">
-        <span className="todos__heading">Active tasks</span>
-        {todos.map((todo) => (
-          <TodoCard
-            key={todo.id}
-            setTodos={setTodos}
-            todo={todo}
-            todos={todos}
-          />
-        ))}
-      </div>
-      <div className="todos__remove">
-        <span className="todos__heading">Completed tasks</span>
-        {todos.map((todo) => (
-          <TodoCard
-            key={todo.id}
-            setTodos={setTodos}
-            todo={todo}
-            todos={todos}
-          />
-        ))}
-      </div>
+      <StrictModeDroppable droppableId="TodosList">
+        {(provided) => (
+          <div
+            className="todos"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <span className="todos__heading">Active tasks</span>
+            {todos?.map((todo, index) => (
+              <TodoCard
+                index={index}
+                key={todo.id}
+                setTodos={setTodos}
+                todo={todo}
+                todos={todos}
+              />
+            ))}
+            {/* this keeps the parent div the same size while you drag */}
+            {provided.placeholder} 
+          </div>
+        )}
+      </StrictModeDroppable>
+      <StrictModeDroppable droppableId="TodosRemove">
+        {(provided) => (
+          <div
+            className="todos__remove"
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+          >
+            <span className="todos__heading">Completed tasks</span>
+            {completedTodos.map((todo, index) => (
+              <TodoCard
+                index={index}
+                key={todo.id}
+                setTodos={setCompletedTodos}
+                todo={todo}
+                todos={completedTodos}
+              />
+            ))}
+            {provided.placeholder} 
+          </div>
+        )}
+      </StrictModeDroppable>
     </div>
   );
 };
