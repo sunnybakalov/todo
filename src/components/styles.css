@@ -60,6 +60,18 @@
   background-color: rgb(235, 103, 80);
 }
 
+.dragactive {
+  background-color: aquamarine;
+}
+
+.dragcomplete {
+  background-color: rgb(255, 38, 0);
+}
+
+.drag {
+  box-shadow: 0 0 20px black;
+}
+
 .todos__heading {
   font-size: 30px;
   color: white;

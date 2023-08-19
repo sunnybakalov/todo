@@ -3,7 +3,7 @@ import { Todo } from "../model";
 import "./styles.css";
 import TodoCard from "./TodoCard";
 import { Droppable } from "react-beautiful-dnd";
-import { StrictModeDroppable } from './droppable';
+import { StrictModeDroppable } from "./droppable";
 
 interface Props {
   completedTodos: Todo[];
@@ -18,13 +18,15 @@ const TodoList: React.FC<Props> = ({
   setTodos,
   todos,
 }) => {
-  {console.log(todos, 'TODO')}
+  {
+    console.log(todos, "TODO");
+  }
   return (
     <div className="container">
       <StrictModeDroppable droppableId="TodosList">
-        {(provided) => (
+        {(provided, snapshot) => (
           <div
-            className="todos"
+            className={`todos ${snapshot.isDraggingOver ? "dragactive" : ""}`}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -39,14 +41,14 @@ const TodoList: React.FC<Props> = ({
               />
             ))}
             {/* this keeps the parent div the same size while you drag */}
-            {provided.placeholder} 
+            {provided.placeholder}
           </div>
         )}
       </StrictModeDroppable>
       <StrictModeDroppable droppableId="TodosRemove">
-        {(provided) => (
+        {(provided, snapshot) => (
           <div
-            className="todos__remove"
+            className={`todos__remove ${snapshot.isDraggingOver ? "dragcomplete" : ""}`}
             ref={provided.innerRef}
             {...provided.droppableProps}
           >
@@ -60,7 +62,7 @@ const TodoList: React.FC<Props> = ({
                 todos={completedTodos}
               />
             ))}
-            {provided.placeholder} 
+            {provided.placeholder}
           </div>
         )}
       </StrictModeDroppable>
